@@ -4,9 +4,9 @@ import json
 import threading
 from typing import Dict, Any, Optional
 
-from transcriber import WhisperTranscriber
-from command_interpreter import CommandInterpreter
-from command_executor import CommandExecutor
+from src.core.transcriber import WhisperTranscriber
+from src.core.command_interpreter import CommandInterpreter
+from src.core.command_executor import CommandExecutor
 
 class VoiceControlSystem:
     """

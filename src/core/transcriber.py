@@ -2,7 +2,7 @@ import torch
 import numpy as np
 from transformers import pipeline
 from transformers.utils import is_flash_attn_2_available
-from audio_capture import AudioCapture
+from src.core.audio_capture import AudioCapture
 import threading
 import time
 import json

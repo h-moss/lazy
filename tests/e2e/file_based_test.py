@@ -8,12 +8,12 @@ import json
 import argparse
 from typing import Dict, Any, Optional
 
-from transcriber import WhisperTranscriber
-from command_interpreter import CommandInterpreter
+from src.core.transcriber import WhisperTranscriber
+from src.core.command_interpreter import CommandInterpreter
 
 # Only import CommandExecutor if we have a display
 try:
-    from command_executor import CommandExecutor
+    from src.core.command_executor import CommandExecutor
     HAS_DISPLAY = True
 except ImportError:
     HAS_DISPLAY = False

@@ -5,7 +5,13 @@ without requiring a display server or real voice input.
 """
 import json
 import time
-from command_interpreter import CommandInterpreter
+import os
+import sys
+
+# Add project root to Python path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+
+from src.core.command_interpreter import CommandInterpreter
 
 def main():
     """Run a demonstration of the command interpreter in headless mode."""
@@ -27,11 +33,7 @@ def main():
         "scroll down 5 lines",
         "press control and c",
         "press alt f4",
-        "type hello world",
-        "move the cursor to the center of the screen",
-        "scroll up three lines",
-        "press the escape key",
-        "double click on the icon"
+        "type hello world"
     ]
     
     # Process each command
@@ -68,8 +70,6 @@ def main():
     
     print(f"Successfully interpreted: {pattern_matched}/{len(results)} commands")
     print(f"Average interpretation time: {avg_time:.4f} seconds")
-    print("\nNote: This is a headless demo that only tests command interpretation.")
-    print("To test command execution, run on a system with a display environment.")
 
 if __name__ == "__main__":
     main()

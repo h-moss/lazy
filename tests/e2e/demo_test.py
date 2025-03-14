@@ -7,8 +7,8 @@ transcribed text to the command interpreter and executor.
 import os
 import time
 import json
-from command_interpreter import CommandInterpreter
-from command_executor import CommandExecutor
+from src.core.command_interpreter import CommandInterpreter
+from src.core.command_executor import CommandExecutor
 
 def main():
     """Run a demonstration of the voice control system with simulated commands."""
