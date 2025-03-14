@@ -1,0 +1,64 @@
+<svg width="800" height="400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="400" fill="#f9f9f9" rx="10" ry="10"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">Voice Control System Architecture</text>
+  
+  <!-- Components -->
+  <!-- Speech Recognition -->
+  <rect x="50" y="100" width="150" height="80" fill="#3498db" rx="5" ry="5" opacity="0.8"/>
+  <text x="125" y="145" font-family="Arial" font-size="16" text-anchor="middle" fill="white">Speech Recognition</text>
+  <text x="125" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Microphone Input</text>
+  
+  <!-- Whisper -->
+  <rect x="250" y="100" width="150" height="80" fill="#2ecc71" rx="5" ry="5" opacity="0.8"/>
+  <text x="325" y="145" font-family="Arial" font-size="16" text-anchor="middle" fill="white">Whisper</text>
+  <text x="325" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Transcription</text>
+  
+  <!-- LLM -->
+  <rect x="450" y="100" width="150" height="80" fill="#9b59b6" rx="5" ry="5" opacity="0.8"/>
+  <text x="525" y="145" font-family="Arial" font-size="16" text-anchor="middle" fill="white">Local LLM</text>
+  <text x="525" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Command Interpretation</text>
+  
+  <!-- Command Executor -->
+  <rect x="650" y="100" width="150" height="80" fill="#e74c3c" rx="5" ry="5" opacity="0.8"/>
+  <text x="725" y="145" font-family="Arial" font-size="16" text-anchor="middle" fill="white">Command Executor</text>
+  <text x="725" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Pynput</text>
+  
+  <!-- Flow Arrows -->
+  <line x1="200" y1="140" x2="250" y2="140" stroke="#333" stroke-width="2"/>
+  <line x1="400" y1="140" x2="450" y2="140" stroke="#333" stroke-width="2"/>
+  <line x1="600" y1="140" x2="650" y2="140" stroke="#333" stroke-width="2"/>
+  
+  <!-- Data Flow Labels -->
+  <text x="225" y="130" font-family="Arial" font-size="12" text-anchor="middle">Audio</text>
+  <text x="425" y="130" font-family="Arial" font-size="12" text-anchor="middle">Text</text>
+  <text x="625" y="130" font-family="Arial" font-size="12" text-anchor="middle">Commands</text>
+  
+  <!-- Command Types -->
+  <rect x="150" y="230" width="200" height="40" fill="#34495e" rx="5" ry="5" opacity="0.8"/>
+  <text x="250" y="255" font-family="Arial" font-size="16" text-anchor="middle" fill="white">Mouse Commands</text>
+  
+  <rect x="400" y="230" width="200" height="40" fill="#34495e" rx="5" ry="5" opacity="0.8"/>
+  <text x="500" y="255" font-family="Arial" font-size="16" text-anchor="middle" fill="white">Keyboard Commands</text>
+  
+  <!-- Command Examples -->
+  <rect x="100" y="290" width="150" height="30" fill="#7f8c8d" rx="5" ry="5" opacity="0.6"/>
+  <text x="175" y="310" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Move Mouse</text>
+  
+  <rect x="100" y="330" width="150" height="30" fill="#7f8c8d" rx="5" ry="5" opacity="0.6"/>
+  <text x="175" y="350" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Click/Double-click</text>
+  
+  <rect x="250" y="290" width="150" height="30" fill="#7f8c8d" rx="5" ry="5" opacity="0.6"/>
+  <text x="325" y="310" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Scroll</text>
+  
+  <rect x="400" y="290" width="150" height="30" fill="#7f8c8d" rx="5" ry="5" opacity="0.6"/>
+  <text x="475" y="310" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Key Combinations</text>
+  
+  <rect x="400" y="330" width="150" height="30" fill="#7f8c8d" rx="5" ry="5" opacity="0.6"/>
+  <text x="475" y="350" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Text Typing</text>
+  
+  <rect x="550" y="290" width="150" height="30" fill="#7f8c8d" rx="5" ry="5" opacity="0.6"/>
+  <text x="625" y="310" font-family="Arial" font-size="12" text-anchor="middle" fill="white">Shortcuts</text>
+</svg>

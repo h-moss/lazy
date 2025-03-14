@@ -1,10 +1,13 @@
 # Voice Control System Dependencies
 
-# Audio Capture
+# Audio Capture and Speech Recognition
 pyaudio>=0.2.13
-
-# Speech Recognition
 SpeechRecognition>=3.10.0
+
+# Whisper Transcription
+torch>=2.0.0
+transformers>=4.30.0
+huggingface-hub>=0.16.0
 
 # Command Interpretation
 llama-cpp-python>=0.2.0

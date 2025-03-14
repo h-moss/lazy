@@ -4,7 +4,7 @@ import json
 import threading
 from typing import Dict, Any, Optional
 
-from src.core.transcriber_sr import TranscriberSR
+from src.core.simplified_transcriber import SimplifiedTranscriber
 from src.core.command_interpreter import CommandInterpreter
 from src.core.command_executor import CommandExecutor
 
@@ -14,27 +14,20 @@ class VoiceControlSystem:
     local LLM command interpretation, and pynput command execution.
     """
     def __init__(self, 
-                 whisper_model: str = "whisper",  # Kept for backward compatibility
                  llm_model_path: Optional[str] = None,
-                 verbose: bool = False,
-                 recognition_engine: str = "whisper"):
+                 verbose: bool = False):
         """
         Initialize the VoiceControlSystem.
         
         Args:
-            whisper_model (str): Kept for backward compatibility.
             llm_model_path (str, optional): Path to the LLM model file.
             verbose (bool): Whether to print verbose output.
-            recognition_engine (str): Recognition engine to use with SpeechRecognition.
         """
         self.verbose = verbose
         
         # Initialize components
-        print("Initializing Speech Recognition transcriber...")
-        self.transcriber = TranscriberSR(
-            model_name=recognition_engine,
-            verbose=verbose
-        )
+        print("Initializing transcriber...")
+        self.transcriber = SimplifiedTranscriber(verbose=verbose)
         
         print("Initializing command interpreter...")
         self.interpreter = CommandInterpreter(

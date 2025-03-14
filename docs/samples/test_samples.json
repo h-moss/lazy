@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "command": "move mouse to 500, 300",
+    "transcription": "move mouse to 500, 300",
+    "interpretation": {
+      "type": "mouse",
+      "action": "move",
+      "x": 500,
+      "y": 300
+    },
+    "timestamp": "2025-03-14T12:08:15.187948"
+  },
+  {
+    "id": 2,
+    "command": "click left mouse button",
+    "transcription": "click left mouse button",
+    "interpretation": {
+      "type": "mouse",
+      "action": "click",
+      "button": "left"
+    },
+    "timestamp": "2025-03-14T12:08:15.187965"
+  },
+  {
+    "id": 3,
+    "command": "press control and c",
+    "transcription": "press control and c",
+    "interpretation": {
+      "type": "keyboard",
+      "action": "press",
+      "keys": [
+        "ctrl",
+        "c"
+      ]
+    },
+    "timestamp": "2025-03-14T12:08:15.187969"
+  },
+  {
+    "id": 4,
+    "command": "type hello world",
+    "transcription": "type hello world",
+    "interpretation": {
+      "type": "keyboard",
+      "action": "type",
+      "text": "hello world"
+    },
+    "timestamp": "2025-03-14T12:08:15.187971"
+  },
+  {
+    "id": 5,
+    "command": "scroll down 5 lines",
+    "transcription": "scroll down 5 lines",
+    "interpretation": {
+      "type": "mouse",
+      "action": "scroll",
+      "direction": "down",
+      "amount": 5
+    },
+    "timestamp": "2025-03-14T12:08:15.187974"
+  },
+  {
+    "id": 6,
+    "command": "double click",
+    "transcription": "double click",
+    "interpretation": {
+      "type": "mouse",
+      "action": "double_click",
+      "button": "left"
+    },
+    "timestamp": "2025-03-14T12:08:15.187976"
+  },
+  {
+    "id": 7,
+    "command": "right click",
+    "transcription": "right click",
+    "interpretation": {
+      "type": "mouse",
+      "action": "click",
+      "button": "right"
+    },
+    "timestamp": "2025-03-14T12:08:15.187978"
+  },
+  {
+    "id": 8,
+    "command": "press alt f4",
+    "transcription": "press alt f4",
+    "interpretation": {
+      "type": "keyboard",
+      "action": "press",
+      "keys": [
+        "alt",
+        "f4"
+      ]
+    },
+    "timestamp": "2025-03-14T12:08:15.187980"
+  }
+]
