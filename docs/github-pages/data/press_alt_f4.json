@@ -1,0 +1,16 @@
+{
+  "file": "press_alt_f4.wav",
+  "voice_command": "press alt f4",
+  "transcription": " Press Alt F4",
+  "command": {
+    "error": "LLM not available. Could not interpret command."
+  },
+  "expected": {
+    "type": "keyboard",
+    "action": "press",
+    "keys": [
+      "alt",
+      "f4"
+    ]
+  }
+}

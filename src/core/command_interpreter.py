@@ -3,7 +3,6 @@ import os
 import re
 from typing import Dict, Any, Optional
 from llama_cpp import Llama
-from src.core.pattern_matcher import PatternMatcher
 
 class CommandInterpreter:
     """Interprets transcribed text into structured commands."""
@@ -17,8 +16,7 @@ class CommandInterpreter:
         self.model_path = model_path or self._get_default_model()
         self.llm = self._initialize_llm()
         
-        # Initialize pattern matcher and command cache
-        self.pattern_matcher = PatternMatcher()
+        # Initialize command cache
         self.command_cache = {}
         
     def _initialize_llm(self):

@@ -17,9 +17,6 @@ def test_imports():
     from src.core.command_interpreter import CommandInterpreter
     print("✓ CommandInterpreter")
     
-    from src.core.pattern_matcher import PatternMatcher
-    print("✓ PatternMatcher")
-    
     from src.core.transcriber import WhisperTranscriber
     print("✓ WhisperTranscriber")
     

@@ -20,8 +20,6 @@ def main():
     parser.add_argument("--optimized", action="store_true", help="Use optimized voice control system")
     parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     parser.add_argument("--llm-model", help="Path to LLM model file")
-    parser.add_argument("--engine", default="whisper", choices=["whisper", "google", "sphinx"], 
-                       help="Recognition engine to use with SpeechRecognition")
     
     args = parser.parse_args()
     
@@ -31,14 +29,12 @@ def main():
     if args.optimized:
         system = OptimizedVoiceControlSystem(
             llm_model_path=args.llm_model,
-            verbose=args.verbose,
-            recognition_engine=args.engine
+            verbose=args.verbose
         )
     else:
         system = VoiceControlSystem(
             llm_model_path=args.llm_model,
-            verbose=args.verbose,
-            recognition_engine=args.engine
+            verbose=args.verbose
         )
     
     # Start the system

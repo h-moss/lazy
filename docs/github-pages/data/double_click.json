@@ -1,0 +1,13 @@
+{
+  "file": "double_click.wav",
+  "voice_command": "double click",
+  "transcription": " Double click.",
+  "command": {
+    "error": "LLM not available. Could not interpret command."
+  },
+  "expected": {
+    "type": "mouse",
+    "action": "double_click",
+    "button": "left"
+  }
+}

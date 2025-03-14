@@ -1,0 +1,16 @@
+{
+  "file": "press_ctrl_c.wav",
+  "voice_command": "press ctrl c",
+  "transcription": " Press Control and C.",
+  "command": {
+    "error": "LLM not available. Could not interpret command."
+  },
+  "expected": {
+    "type": "keyboard",
+    "action": "press",
+    "keys": [
+      "ctrl",
+      "c"
+    ]
+  }
+}

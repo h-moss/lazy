@@ -1,0 +1,14 @@
+{
+  "file": "scroll_down.wav",
+  "voice_command": "scroll down",
+  "transcription": " Scroll down 5 lines.",
+  "command": {
+    "error": "LLM not available. Could not interpret command."
+  },
+  "expected": {
+    "type": "mouse",
+    "action": "scroll",
+    "direction": "down",
+    "amount": 5
+  }
+}

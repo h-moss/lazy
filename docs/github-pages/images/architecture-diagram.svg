@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#f8f9fa" rx="10" ry="10" />
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold" fill="#2c3e50">Voice Control System Architecture</text>
+  
+  <!-- Components -->
+  <!-- Microphone Input -->
+  <rect x="50" y="100" width="150" height="80" rx="10" ry="10" fill="#3498db" stroke="#2980b9" stroke-width="2" />
+  <text x="125" y="145" font-family="Arial" font-size="16" text-anchor="middle" fill="white" font-weight="bold">Microphone Input</text>
+  <text x="125" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(SpeechRecognition)</text>
+  
+  <!-- Whisper Transcription -->
+  <rect x="300" y="100" width="200" height="80" rx="10" ry="10" fill="#2ecc71" stroke="#27ae60" stroke-width="2" />
+  <text x="400" y="145" font-family="Arial" font-size="16" text-anchor="middle" fill="white" font-weight="bold">Whisper Transcription</text>
+  <text x="400" y="165" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Speech-to-Text)</text>
+  
+  <!-- LLM Interpretation -->
+  <rect x="300" y="250" width="200" height="80" rx="10" ry="10" fill="#9b59b6" stroke="#8e44ad" stroke-width="2" />
+  <text x="400" y="295" font-family="Arial" font-size="16" text-anchor="middle" fill="white" font-weight="bold">LLM Interpretation</text>
+  <text x="400" y="315" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Command Structuring)</text>
+  
+  <!-- Command Execution -->
+  <rect x="600" y="250" width="150" height="80" rx="10" ry="10" fill="#e74c3c" stroke="#c0392b" stroke-width="2" />
+  <text x="675" y="295" font-family="Arial" font-size="16" text-anchor="middle" fill="white" font-weight="bold">Command Execution</text>
+  <text x="675" y="315" font-family="Arial" font-size="12" text-anchor="middle" fill="white">(Pynput)</text>
+  
+  <!-- Mouse Controller -->
+  <rect x="525" y="400" width="120" height="60" rx="10" ry="10" fill="#f39c12" stroke="#d35400" stroke-width="2" />
+  <text x="585" y="435" font-family="Arial" font-size="14" text-anchor="middle" fill="white" font-weight="bold">Mouse Controller</text>
+  
+  <!-- Keyboard Controller -->
+  <rect x="675" y="400" width="120" height="60" rx="10" ry="10" fill="#f39c12" stroke="#d35400" stroke-width="2" />
+  <text x="735" y="435" font-family="Arial" font-size="14" text-anchor="middle" fill="white" font-weight="bold">Keyboard Controller</text>
+  
+  <!-- Arrows -->
+  <!-- Microphone to Whisper -->
+  <line x1="200" y1="140" x2="300" y2="140" stroke="#34495e" stroke-width="3" />
+  <polygon points="290,135 300,140 290,145" fill="#34495e" />
+  
+  <!-- Whisper to LLM -->
+  <line x1="400" y1="180" x2="400" y2="250" stroke="#34495e" stroke-width="3" />
+  <polygon points="395,240 400,250 405,240" fill="#34495e" />
+  
+  <!-- LLM to Command Execution -->
+  <line x1="500" y1="290" x2="600" y2="290" stroke="#34495e" stroke-width="3" />
+  <polygon points="590,285 600,290 590,295" fill="#34495e" />
+  
+  <!-- Command Execution to Controllers -->
+  <line x1="675" y1="330" x2="675" y2="370" stroke="#34495e" stroke-width="2" />
+  <line x1="675" y1="370" x2="585" y2="400" stroke="#34495e" stroke-width="2" />
+  <polygon points="590,395 585,400 580,395" fill="#34495e" />
+  
+  <line x1="675" y1="370" x2="735" y2="400" stroke="#34495e" stroke-width="2" />
+  <polygon points="730,395 735,400 740,395" fill="#34495e" />
+  
+  <!-- Data Flow Labels -->
+  <text x="250" y="130" font-family="Arial" font-size="12" text-anchor="middle" fill="#34495e">Audio Data</text>
+  <text x="420" y="215" font-family="Arial" font-size="12" text-anchor="middle" fill="#34495e">Transcribed Text</text>
+  <text x="550" y="280" font-family="Arial" font-size="12" text-anchor="middle" fill="#34495e">Structured Commands</text>
+  <text x="600" y="370" font-family="Arial" font-size="12" text-anchor="middle" fill="#34495e">Input Events</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="400" width="20" height="20" fill="#3498db" stroke="#2980b9" stroke-width="1" />
+  <text x="80" y="415" font-family="Arial" font-size="12" fill="#34495e">Input</text>
+  
+  <rect x="50" y="430" width="20" height="20" fill="#2ecc71" stroke="#27ae60" stroke-width="1" />
+  <text x="80" y="445" font-family="Arial" font-size="12" fill="#34495e">Processing</text>
+  
+  <rect x="150" y="400" width="20" height="20" fill="#9b59b6" stroke="#8e44ad" stroke-width="1" />
+  <text x="180" y="415" font-family="Arial" font-size="12" fill="#34495e">Interpretation</text>
+  
+  <rect x="150" y="430" width="20" height="20" fill="#e74c3c" stroke="#c0392b" stroke-width="1" />
+  <text x="180" y="445" font-family="Arial" font-size="12" fill="#34495e">Execution</text>
+  
+  <rect x="250" y="400" width="20" height="20" fill="#f39c12" stroke="#d35400" stroke-width="1" />
+  <text x="280" y="415" font-family="Arial" font-size="12" fill="#34495e">Controllers</text>
+</svg>
