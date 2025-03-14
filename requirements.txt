@@ -1,0 +1,18 @@
+# Voice Control System Dependencies
+
+# Audio Capture
+pyaudio>=0.2.13
+
+# Speech Recognition
+torch>=2.0.0
+transformers>=4.30.0
+
+# Command Interpretation
+llama-cpp-python>=0.2.0
+
+# Command Execution
+pynput>=1.7.6
+
+# General Dependencies
+numpy>=1.20.0
+tqdm>=4.65.0
