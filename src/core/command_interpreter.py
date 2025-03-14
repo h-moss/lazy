@@ -86,18 +86,11 @@ Now interpret the following voice command:
         # Clean up the text
         text = text.strip().lower()
         
-        # Try to match common patterns directly for faster response
-        command = self.pattern_matcher.match_pattern(text)
-        if command:
-            # Cache the result
-            self.command_cache[text] = command
-            return command
-            
-        # Use the LLM for more complex commands if available
+        # Use the LLM for command interpretation
         if self.llm is None:
             if self.verbose:
-                print("LLM not initialized. Using pattern matching only.")
-            return {"error": "LLM not available. Could not interpret complex command."}
+                print("LLM not initialized. Cannot interpret command.")
+            return {"error": "LLM not available. Could not interpret command."}
             
         system_prompt = self._build_system_prompt()
         prompt = f"{system_prompt}\n\n{text}"
