@@ -1,0 +1,13 @@
+{
+  "file": "click.wav",
+  "voice_command": "click",
+  "transcription": " Click left mouse button.",
+  "command": {
+    "error": "LLM not available. Could not interpret command."
+  },
+  "expected": {
+    "type": "mouse",
+    "action": "click",
+    "button": "left"
+  }
+}
