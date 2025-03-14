@@ -10,7 +10,14 @@ from typing import Dict, Any, Optional
 
 from transcriber import WhisperTranscriber
 from command_interpreter import CommandInterpreter
-from command_executor import CommandExecutor
+
+# Only import CommandExecutor if we have a display
+try:
+    from command_executor import CommandExecutor
+    HAS_DISPLAY = True
+except ImportError:
+    HAS_DISPLAY = False
+    print("Warning: No display detected. Running in headless mode without command execution.")
 
 def test_with_audio_file(
     audio_file: str,
@@ -37,8 +44,7 @@ def test_with_audio_file(
     # Initialize components
     print("Initializing Whisper transcriber...")
     transcriber = WhisperTranscriber(
-        model_name=whisper_model,
-        verbose=verbose
+        model_name=whisper_model
     )
     
     print("Initializing command interpreter...")
@@ -46,6 +52,16 @@ def test_with_audio_file(
         model_path=llm_model_path,
         verbose=verbose
     )
+    
+    # Initialize command executor if display is available
+    executor = None
+    if HAS_DISPLAY:
+        try:
+            print("Initializing command executor...")
+            executor = CommandExecutor(verbose=verbose)
+        except Exception as e:
+            print(f"Warning: Could not initialize command executor: {e}")
+            print("Running in headless mode without command execution.")
     
     # Transcribe the audio file
     print("Transcribing audio...")
@@ -83,6 +99,18 @@ def test_with_audio_file(
     
     if match:
         print("✅ Test PASSED: Command matches expected structure")
+        
+        # Execute command if executor is available
+        if executor is not None:
+            print("Executing command...")
+            success = executor.execute(command)
+            if success:
+                print("Command executed successfully.")
+            else:
+                print("Failed to execute command.")
+        else:
+            print("Skipping execution (headless mode).")
+            
         return True
     else:
         print("❌ Test FAILED: Command does not match expected structure")

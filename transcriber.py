@@ -17,7 +17,8 @@ class WhisperTranscriber:
                  device=None,
                  chunk_length_s=30,
                  batch_size=8,
-                 return_timestamps=True):
+                 return_timestamps=True,
+                 verbose=False):
         """
         Initialize the WhisperTranscriber class.
         
@@ -55,6 +56,7 @@ class WhisperTranscriber:
         self.is_listening = False
         self.listening_thread = None
         self.transcription_callback = None
+        self.verbose = verbose
         
     def transcribe(self, waveform):
         """

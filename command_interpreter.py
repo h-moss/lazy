@@ -192,7 +192,7 @@ Now interpret the following voice command:
             dict or None: Matched command or None if no match.
         """
         # Mouse movement
-        mouse_move_match = re.search(r'move (?:mouse|cursor) (?:to)? (?:coordinates? |position |point )?(\d+)[,\s]+(\d+)', text)
+        mouse_move_match = re.search(r'move (?:mouse|cursor) (?:to)? (?:coordinates? |position |point )?(\d+)[,\s.-]+(\d+)', text)
         if mouse_move_match:
             x, y = int(mouse_move_match.group(1)), int(mouse_move_match.group(2))
             return {"type": "mouse", "action": "move", "x": x, "y": y}
