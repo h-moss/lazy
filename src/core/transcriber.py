@@ -1,46 +1,36 @@
-import torch
-import numpy as np
-from transformers import pipeline
-from transformers.utils import is_flash_attn_2_available
+import speech_recognition as sr
 import threading
 import time
-import json
 import os
+from typing import Callable, Optional, Dict, Any
+import torch
+from transformers import pipeline
+from transformers.utils import is_flash_attn_2_available
 
-class WhisperTranscriber:
+class Transcriber:
     """
-    A class to transcribe audio using OpenAI's Whisper model.
+    A unified transcriber that uses SpeechRecognition for microphone input
+    and Whisper for transcription.
     """
-    def __init__(self, 
-                 model_name="openai/whisper-small",
-                 device=None,
-                 chunk_length_s=30,
-                 batch_size=8,
-                 return_timestamps=True,
-                 verbose=False):
+    def __init__(self, verbose=False):
         """
-        Initialize the WhisperTranscriber class.
+        Initialize the Transcriber.
         
         Args:
-            model_name (str): Name of the Whisper model to use.
-            device (str): Device to use for inference (cpu, cuda, mps).
-            chunk_length_s (int): Length of audio chunks in seconds.
-            batch_size (int): Batch size for processing.
-            return_timestamps (bool): Whether to return timestamps.
+            verbose (bool): Whether to print verbose output.
         """
-        # Determine device
-        if device is None:
-            if torch.cuda.is_available():
-                device = "cuda"
-            elif torch.backends.mps.is_available():
-                device = "mps"
-            else:
-                device = "cpu"
+        self.verbose = verbose
+        self.recognizer = sr.Recognizer()
         
-        # Set up the pipeline
+        # Adjust recognition parameters
+        self.recognizer.pause_threshold = 0.8
+        self.recognizer.energy_threshold = 300
+        
+        # Initialize Whisper pipeline
+        device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
         self.pipe = pipeline(
             "automatic-speech-recognition",
-            model=model_name,
+            model="openai/whisper-small",
             torch_dtype=torch.float16 if device != "cpu" else torch.float32,
             device=device,
             model_kwargs={"attn_implementation": "flash_attention_2"}
@@ -48,17 +38,13 @@ class WhisperTranscriber:
             else {"attn_implementation": "sdpa"},
         )
         
-        self.chunk_length_s = chunk_length_s
-        self.batch_size = batch_size
-        self.return_timestamps = return_timestamps
         self.is_listening = False
         self.listening_thread = None
         self.transcription_callback = None
-        self.verbose = verbose
         
     def transcribe(self, waveform):
         """
-        Transcribe audio waveform to text.
+        Transcribe audio waveform to text using Whisper.
         
         Args:
             waveform: Audio waveform to transcribe.
@@ -66,18 +52,22 @@ class WhisperTranscriber:
         Returns:
             dict: Transcription results.
         """
-        outputs = self.pipe(
-            waveform,
-            chunk_length_s=self.chunk_length_s,
-            batch_size=self.batch_size,
-            return_timestamps=self.return_timestamps,
-        )
-        
-        return outputs
+        try:
+            outputs = self.pipe(
+                waveform,
+                chunk_length_s=30,
+                batch_size=8,
+                return_timestamps=True,
+            )
+            return outputs
+        except Exception as e:
+            if self.verbose:
+                print(f"Error transcribing audio: {e}")
+            return {"text": "", "error": str(e)}
     
     def transcribe_file(self, audio_file):
         """
-        Transcribe audio from a file.
+        Transcribe audio from a file using Whisper.
         
         Args:
             audio_file (str): Path to audio file.
@@ -85,11 +75,16 @@ class WhisperTranscriber:
         Returns:
             dict: Transcription results.
         """
-        return self.pipe(audio_file)
+        try:
+            return self.pipe(audio_file)
+        except Exception as e:
+            if self.verbose:
+                print(f"Error transcribing file: {e}")
+            return {"text": "", "error": str(e)}
     
     def start_listening(self, callback=None):
         """
-        Start listening for audio and transcribing in real-time.
+        Start listening for audio using SpeechRecognition and transcribe with Whisper.
         
         Args:
             callback (callable): Function to call with transcription results.
@@ -99,9 +94,6 @@ class WhisperTranscriber:
             
         self.is_listening = True
         self.transcription_callback = callback
-        
-        # Note: Audio capture functionality has been moved to SpeechRecognition
-        # in the TranscriberSR class
         
         # Start listening thread
         self.listening_thread = threading.Thread(target=self._listening_worker)
@@ -117,19 +109,45 @@ class WhisperTranscriber:
             
     def _listening_worker(self):
         """Worker thread for listening and transcribing audio."""
-        # Note: This method is kept for compatibility but the actual
-        # implementation has been moved to TranscriberSR
-        
-        print("WhisperTranscriber._listening_worker is deprecated.")
-        print("Please use TranscriberSR from src.core.transcriber_sr instead.")
-        
-        # Sleep to keep thread alive but not consume resources
         while self.is_listening:
-            time.sleep(1.0)
+            try:
+                with sr.Microphone() as source:
+                    if self.verbose:
+                        print("Adjusting for ambient noise...")
+                    self.recognizer.adjust_for_ambient_noise(source, duration=0.5)
                     
-    def __del__(self):
-        """Clean up resources."""
-        self.stop_listening()
+                    if self.verbose:
+                        print("Listening...")
+                    audio = self.recognizer.listen(source, 
+                                                  timeout=5.0, 
+                                                  phrase_time_limit=10.0)
+                    
+                    if self.verbose:
+                        print("Processing audio...")
+                    
+                    # Convert audio data to numpy array for Whisper
+                    audio_data = audio.get_raw_data()
+                    import numpy as np
+                    waveform = np.frombuffer(audio_data, np.int16).astype(np.float32) / 32768.0
+                    
+                    # Transcribe with Whisper
+                    result = self.transcribe(waveform)
+                    
+                    if result.get("text", ""):
+                        if self.verbose:
+                            print(f"Transcription: {result['text']}")
+                            
+                        # Call callback with result
+                        if self.transcription_callback is not None:
+                            self.transcription_callback(result)
+                
+            except sr.WaitTimeoutError:
+                if self.verbose:
+                    print("Timeout waiting for phrase to start")
+            except Exception as e:
+                if self.verbose:
+                    print(f"Error in listening worker: {e}")
+                time.sleep(0.5)  # Prevent tight loop on error
 
 
 # Example usage
@@ -138,7 +156,7 @@ if __name__ == "__main__":
         print(f"Transcribed: {result['text']}")
         
     # Initialize transcriber
-    transcriber = WhisperTranscriber(model_name="openai/whisper-small")
+    transcriber = Transcriber(verbose=True)
     
     # Start listening
     print("Listening for speech... (Press Ctrl+C to stop)")

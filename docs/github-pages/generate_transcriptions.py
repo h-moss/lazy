@@ -12,7 +12,7 @@ from pathlib import Path
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 sys.path.insert(0, project_root)
 
-from src.core.simplified_transcriber import SimplifiedTranscriber
+from src.core.transcriber import Transcriber
 from src.core.command_interpreter import CommandInterpreter
 
 def main():
@@ -20,7 +20,7 @@ def main():
     print("Generating transcriptions for test audio files...")
     
     # Initialize components
-    transcriber = SimplifiedTranscriber(verbose=True)
+    transcriber = Transcriber(verbose=True)
     interpreter = CommandInterpreter(verbose=True)
     
     # Define test cases with expected outputs

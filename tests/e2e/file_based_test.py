@@ -8,7 +8,7 @@ import json
 import argparse
 from typing import Dict, Any, Optional
 
-from src.core.transcriber import WhisperTranscriber
+from src.core.transcriber import Transcriber
 from src.core.command_interpreter import CommandInterpreter
 
 # Only import CommandExecutor if we have a display
@@ -42,9 +42,9 @@ def test_with_audio_file(
     print(f"\nTesting with audio file: {audio_file}")
     
     # Initialize components
-    print("Initializing Whisper transcriber...")
-    transcriber = WhisperTranscriber(
-        model_name=whisper_model
+    print("Initializing transcriber...")
+    transcriber = Transcriber(
+        verbose=verbose
     )
     
     print("Initializing command interpreter...")

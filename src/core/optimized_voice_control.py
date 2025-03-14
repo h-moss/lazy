@@ -1,7 +1,7 @@
 import time
 from typing import Dict, Any, Optional
 
-from src.core.simplified_transcriber import SimplifiedTranscriber
+from src.core.transcriber import Transcriber
 from src.core.command_interpreter import CommandInterpreter
 from src.core.command_executor import CommandExecutor
 from src.core.command_worker import CommandWorker
@@ -13,7 +13,7 @@ class OptimizedVoiceControlSystem:
                  verbose=False, cache_size=100, max_workers=2):
         self.verbose = verbose
         
-        self.transcriber = SimplifiedTranscriber(verbose=verbose)
+        self.transcriber = Transcriber(verbose=verbose)
         
         self.interpreter = CommandInterpreter(
             model_path=llm_model_path,

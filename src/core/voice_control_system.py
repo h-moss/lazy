@@ -4,7 +4,7 @@ import json
 import threading
 from typing import Dict, Any, Optional
 
-from src.core.simplified_transcriber import SimplifiedTranscriber
+from src.core.transcriber import Transcriber
 from src.core.command_interpreter import CommandInterpreter
 from src.core.command_executor import CommandExecutor
 
@@ -27,7 +27,7 @@ class VoiceControlSystem:
         
         # Initialize components
         print("Initializing transcriber...")
-        self.transcriber = SimplifiedTranscriber(verbose=verbose)
+        self.transcriber = Transcriber(verbose=verbose)
         
         print("Initializing command interpreter...")
         self.interpreter = CommandInterpreter(

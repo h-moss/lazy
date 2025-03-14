@@ -6,10 +6,10 @@ import sys
 # Add project root to Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
-from src.core.simplified_transcriber import SimplifiedTranscriber
+from src.core.transcriber import Transcriber
 
-class TestSimplifiedTranscriber(unittest.TestCase):
-    """Test the simplified transcriber."""
+class TestTranscriber(unittest.TestCase):
+    """Test the unified transcriber."""
     
     @patch('torch.cuda.is_available')
     @patch('torch.backends.mps.is_available')
@@ -24,8 +24,8 @@ class TestSimplifiedTranscriber(unittest.TestCase):
         mock_recognizer_instance = MagicMock()
         mock_recognizer.return_value = mock_recognizer_instance
         
-        # Create SimplifiedTranscriber
-        transcriber = SimplifiedTranscriber(verbose=True)
+        # Create Transcriber
+        transcriber = Transcriber(verbose=True)
         
         # Check initialization
         self.assertIsNotNone(transcriber)
@@ -41,8 +41,8 @@ class TestSimplifiedTranscriber(unittest.TestCase):
         mock_pipeline_instance.return_value = {"text": "test transcription"}
         mock_pipeline.return_value = mock_pipeline_instance
         
-        # Create SimplifiedTranscriber
-        transcriber = SimplifiedTranscriber()
+        # Create Transcriber
+        transcriber = Transcriber()
         
         # Mock the pipeline call
         transcriber.pipe = MagicMock()
@@ -58,8 +58,8 @@ class TestSimplifiedTranscriber(unittest.TestCase):
     @patch('speech_recognition.Recognizer')
     def test_transcribe_error(self, mock_recognizer, mock_pipeline):
         """Test error handling in transcribe."""
-        # Create SimplifiedTranscriber
-        transcriber = SimplifiedTranscriber(verbose=True)
+        # Create Transcriber
+        transcriber = Transcriber(verbose=True)
         
         # Mock the pipeline call to raise an exception
         transcriber.pipe = MagicMock()
@@ -81,8 +81,8 @@ class TestSimplifiedTranscriber(unittest.TestCase):
         mock_recognizer_instance = MagicMock()
         mock_recognizer.return_value = mock_recognizer_instance
         
-        # Create SimplifiedTranscriber
-        transcriber = SimplifiedTranscriber()
+        # Create Transcriber
+        transcriber = Transcriber()
         
         # Mock the listening thread
         with patch.object(transcriber, '_listening_worker') as mock_worker:

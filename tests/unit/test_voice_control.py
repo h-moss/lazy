@@ -14,7 +14,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Import modules that don't require X server
-from src.core.transcriber import WhisperTranscriber
+from src.core.transcriber import Transcriber
 from src.core.command_interpreter import CommandInterpreter
 
 # Skip tests that require X server in headless environments
