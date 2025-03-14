@@ -2,61 +2,57 @@
 """
 Main entry point for the voice control system.
 """
-from core.audio_capture import AudioCapture
-from core.transcriber import WhisperTranscriber
-from core.command_interpreter import CommandInterpreter
-from core.command_executor import CommandExecutor
+import argparse
+import time
+import sys
+import os
+
+# Add the project root to the Python path
+project_root = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+sys.path.insert(0, project_root)
+
+from src.core.voice_control_system import VoiceControlSystem
+from src.core.optimized_voice_control import OptimizedVoiceControlSystem
 
 def main():
-    """Run the voice control system."""
-    print("Starting Voice Control System")
-    print("============================")
+    """Main function to run the voice control system."""
+    parser = argparse.ArgumentParser(description="Voice Control System")
+    parser.add_argument("--optimized", action="store_true", help="Use optimized voice control system")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
+    parser.add_argument("--llm-model", help="Path to LLM model file")
+    parser.add_argument("--engine", default="whisper", choices=["whisper", "google", "sphinx"], 
+                       help="Recognition engine to use with SpeechRecognition")
     
-    # Initialize components
-    print("Initializing audio capture...")
-    audio = AudioCapture()
+    args = parser.parse_args()
     
-    print("Initializing transcriber...")
-    transcriber = WhisperTranscriber()
+    print("Initializing voice control system...")
     
-    print("Initializing command interpreter...")
-    interpreter = CommandInterpreter()
+    # Create the voice control system
+    if args.optimized:
+        system = OptimizedVoiceControlSystem(
+            llm_model_path=args.llm_model,
+            verbose=args.verbose,
+            recognition_engine=args.engine
+        )
+    else:
+        system = VoiceControlSystem(
+            llm_model_path=args.llm_model,
+            verbose=args.verbose,
+            recognition_engine=args.engine
+        )
     
-    print("Initializing command executor...")
-    executor = CommandExecutor()
-    
-    # Define callback for transcription results
-    def process_command(result):
-        text = result.get('text', '').strip()
-        if not text:
-            return
-            
-        print(f"Transcribed: '{text}'")
-        
-        # Interpret command
-        command = interpreter.interpret(text)
-        
-        # Execute command if valid
-        if "error" not in command:
-            print(f"Executing: {command}")
-            executor.execute(command)
-        else:
-            print(f"Error: {command['error']}")
-    
-    # Start listening
-    print("\nListening for voice commands... (Press Ctrl+C to stop)")
-    transcriber.start_listening(callback=process_command)
+    # Start the system
+    system.start()
     
     try:
         # Keep the main thread alive
         while True:
-            import time
             time.sleep(0.1)
     except KeyboardInterrupt:
-        print("Stopping...")
+        print("\nStopping voice control system...")
     finally:
         # Clean up
-        transcriber.stop_listening()
+        system.stop()
 
 if __name__ == "__main__":
     main()

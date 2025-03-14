@@ -4,7 +4,7 @@ import json
 import threading
 from typing import Dict, Any, Optional
 
-from src.core.transcriber import WhisperTranscriber
+from src.core.transcriber_sr import TranscriberSR
 from src.core.command_interpreter import CommandInterpreter
 from src.core.command_executor import CommandExecutor
 
@@ -14,26 +14,26 @@ class VoiceControlSystem:
     local LLM command interpretation, and pynput command execution.
     """
     def __init__(self, 
-                 whisper_model: str = "openai/whisper-small",
+                 whisper_model: str = "whisper",  # Kept for backward compatibility
                  llm_model_path: Optional[str] = None,
-                 verbose: bool = False):
+                 verbose: bool = False,
+                 recognition_engine: str = "whisper"):
         """
         Initialize the VoiceControlSystem.
         
         Args:
-            whisper_model (str): Name of the Whisper model to use.
+            whisper_model (str): Kept for backward compatibility.
             llm_model_path (str, optional): Path to the LLM model file.
             verbose (bool): Whether to print verbose output.
+            recognition_engine (str): Recognition engine to use with SpeechRecognition.
         """
         self.verbose = verbose
         
         # Initialize components
-        print("Initializing Whisper transcriber...")
-        self.transcriber = WhisperTranscriber(
-            model_name=whisper_model,
-            chunk_length_s=10,
-            batch_size=4,
-            return_timestamps=True
+        print("Initializing Speech Recognition transcriber...")
+        self.transcriber = TranscriberSR(
+            model_name=recognition_engine,
+            verbose=verbose
         )
         
         print("Initializing command interpreter...")

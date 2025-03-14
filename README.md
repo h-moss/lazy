@@ -2,14 +2,15 @@
 
 A voice-controlled system for laptop control using spoken commands, built with:
 
-- **Whisper (OpenAI)** - For transcribing spoken commands into text
+- **SpeechRecognition** - For transcribing spoken commands into text with multiple engine options
 - **Local LLM** - For processing transcribed text into structured commands
 - **Pynput** - For executing structured commands as keyboard and mouse inputs
 
 ## Features
 
-- Real-time audio capture with voice activity detection
-- Accurate speech-to-text transcription using Whisper
+- Real-time audio capture with ambient noise adaptation
+- Accurate speech-to-text transcription using SpeechRecognition
+- Multiple recognition engines (Whisper, Google, Sphinx)
 - Command interpretation using a local LLM
 - Keyboard and mouse control via pynput
 - Continuous listening loop for seamless interaction
@@ -19,9 +20,10 @@ A voice-controlled system for laptop control using spoken commands, built with:
 
 The system consists of three main components:
 
-1. **Audio Capture and Transcription (Whisper)**
+1. **Audio Capture and Transcription (SpeechRecognition)**
    - Captures audio from the microphone
-   - Transcribes spoken commands to text using OpenAI's Whisper model
+   - Transcribes spoken commands to text using multiple engine options
+   - Supports Whisper, Google Speech Recognition, and CMU Sphinx engines
 
 2. **Command Interpretation (Local LLM)**
    - Processes transcribed text into structured commands
@@ -59,7 +61,7 @@ The system supports various voice commands that are converted into structured fo
    sudo apt-get install -y portaudio19-dev python3-pyaudio
    
    # Python dependencies
-   pip install pyaudio pynput transformers torch llama-cpp-python
+   pip install -r requirements.txt
    ```
 
 3. Download a model for the local LLM:
@@ -74,7 +76,7 @@ The system supports various voice commands that are converted into structured fo
 Run the standard voice control system:
 
 ```
-python main.py
+python -m src.main
 ```
 
 ### Optimized Version
@@ -82,28 +84,49 @@ python main.py
 Run the optimized version with improved latency and accuracy:
 
 ```
-python main.py --optimized
+python -m src.main --optimized
+```
+
+### Recognition Engine Options
+
+Choose from different speech recognition engines:
+
+```
+# Use Whisper (default)
+python -m src.main --engine whisper
+
+# Use Google Speech Recognition
+python -m src.main --engine google
+
+# Use CMU Sphinx (offline)
+python -m src.main --engine sphinx
 ```
 
 ### Additional Options
 
 ```
-python main.py --help
+python -m src.main --help
 ```
 
 Options:
 - `--optimized`: Use the optimized version
-- `--whisper-model MODEL`: Specify the Whisper model to use
 - `--llm-model PATH`: Path to the LLM model file
 - `--verbose`: Enable verbose output
-- `--test`: Run in test mode (exits after 30 seconds)
+- `--engine {whisper,google,sphinx}`: Recognition engine to use
 
 ## Testing
 
 Run the test suite to verify system functionality:
 
 ```
-python test_voice_control.py
+# Run unit tests
+python -m unittest discover -s tests/unit
+
+# Run end-to-end tests
+python -m unittest discover -s tests/e2e
+
+# Run import test
+python tests/import_test.py
 ```
 
 ## Optimization Features

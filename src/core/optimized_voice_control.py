@@ -1,7 +1,7 @@
 import time
 from typing import Dict, Any, Optional
 
-from src.core.transcriber import WhisperTranscriber
+from src.core.transcriber_sr import TranscriberSR
 from src.core.command_interpreter import CommandInterpreter
 from src.core.command_executor import CommandExecutor
 from src.core.command_worker import CommandWorker
@@ -9,14 +9,14 @@ from src.core.command_worker import CommandWorker
 class OptimizedVoiceControlSystem:
     """An optimized voice-controlled system with improved performance."""
     
-    def __init__(self, whisper_model="openai/whisper-tiny", llm_model_path=None, 
-                 verbose=False, cache_size=100, max_workers=2):
+    def __init__(self, whisper_model=None, llm_model_path=None, 
+                 verbose=False, cache_size=100, max_workers=2,
+                 recognition_engine="whisper"):
         self.verbose = verbose
         
-        self.transcriber = WhisperTranscriber(
-            model_name=whisper_model,
-            chunk_length_s=5,
-            batch_size=4
+        self.transcriber = TranscriberSR(
+            model_name=recognition_engine,
+            verbose=verbose
         )
         
         self.interpreter = CommandInterpreter(
@@ -88,10 +88,10 @@ def main():
     print("Initializing optimized voice control system...")
     
     system = OptimizedVoiceControlSystem(
-        whisper_model="openai/whisper-tiny",
         verbose=True,
         cache_size=100,
-        max_workers=2
+        max_workers=2,
+        recognition_engine="whisper"
     )
     
     system.start()
