@@ -14,7 +14,6 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 # Import modules that don't require X server
-from src.core.audio_capture import AudioCapture
 from src.core.transcriber import WhisperTranscriber
 from src.core.command_interpreter import CommandInterpreter
 
@@ -25,34 +24,7 @@ if not SKIP_X_SERVER_TESTS:
     from src.core.voice_control_system import VoiceControlSystem
     from src.core.optimized_voice_control import OptimizedVoiceControlSystem
 
-class TestAudioCapture(unittest.TestCase):
-    """Test the audio capture component."""
-    
-    @patch('pyaudio.PyAudio')
-    def test_init(self, mock_pyaudio):
-        """Test initialization."""
-        # Mock PyAudio
-        mock_pyaudio_instance = MagicMock()
-        mock_pyaudio.return_value = mock_pyaudio_instance
-        
-        # Mock stream
-        mock_stream = MagicMock()
-        mock_pyaudio_instance.open.return_value = mock_stream
-        
-        # Create AudioCapture
-        audio_capture = AudioCapture()
-        
-        # Check initialization
-        self.assertIsNotNone(audio_capture)
-        self.assertFalse(audio_capture.is_recording)
-        
-    @unittest.skip("Skipping due to PyAudio mocking issues")
-    @patch('pyaudio.PyAudio')
-    def test_start_stop_stream(self, mock_pyaudio):
-        """Test starting and stopping the audio stream."""
-        # This test is skipped because the mocking approach doesn't work correctly
-        # with the current implementation of AudioCapture
-        pass
+# AudioCapture tests removed as the class has been replaced by SpeechRecognition
 
 class TestCommandInterpreter(unittest.TestCase):
     """Test the command interpreter component."""

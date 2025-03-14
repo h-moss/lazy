@@ -2,7 +2,6 @@ import torch
 import numpy as np
 from transformers import pipeline
 from transformers.utils import is_flash_attn_2_available
-from src.core.audio_capture import AudioCapture
 import threading
 import time
 import json
@@ -52,7 +51,6 @@ class WhisperTranscriber:
         self.chunk_length_s = chunk_length_s
         self.batch_size = batch_size
         self.return_timestamps = return_timestamps
-        self.audio_capture = None
         self.is_listening = False
         self.listening_thread = None
         self.transcription_callback = None
@@ -102,12 +100,8 @@ class WhisperTranscriber:
         self.is_listening = True
         self.transcription_callback = callback
         
-        # Initialize audio capture if not already done
-        if self.audio_capture is None:
-            self.audio_capture = AudioCapture()
-            
-        # Start audio stream
-        self.audio_capture.start_stream()
+        # Note: Audio capture functionality has been moved to SpeechRecognition
+        # in the TranscriberSR class
         
         # Start listening thread
         self.listening_thread = threading.Thread(target=self._listening_worker)
@@ -121,46 +115,21 @@ class WhisperTranscriber:
             self.listening_thread.join(timeout=1.0)
             self.listening_thread = None
             
-        if self.audio_capture is not None:
-            self.audio_capture.stop_stream()
-            
     def _listening_worker(self):
         """Worker thread for listening and transcribing audio."""
-        temp_file = "temp_audio.wav"
+        # Note: This method is kept for compatibility but the actual
+        # implementation has been moved to TranscriberSR
         
+        print("WhisperTranscriber._listening_worker is deprecated.")
+        print("Please use TranscriberSR from src.core.transcriber_sr instead.")
+        
+        # Sleep to keep thread alive but not consume resources
         while self.is_listening:
-            # Wait for voice activity
-            if self.audio_capture is None or not self.audio_capture.is_recording:
-                time.sleep(0.1)
-                continue
-                
-            # Wait for recording to complete
-            while self.audio_capture is not None and self.audio_capture.is_recording and self.is_listening:
-                time.sleep(0.1)
-                
-            # Save audio to temporary file
-            if self.audio_capture is not None and self.audio_capture.save_audio(temp_file):
-                try:
-                    # Transcribe audio
-                    result = self.transcribe_file(temp_file)
-                    
-                    # Call callback with result
-                    if self.transcription_callback is not None:
-                        self.transcription_callback(result)
-                        
-                    print(f"Transcription: {result['text']}")
-                except Exception as e:
-                    print(f"Error transcribing audio: {e}")
-                    
-                # Clean up temporary file
-                if os.path.exists(temp_file):
-                    os.remove(temp_file)
+            time.sleep(1.0)
                     
     def __del__(self):
         """Clean up resources."""
         self.stop_listening()
-        if self.audio_capture is not None:
-            del self.audio_capture
 
 
 # Example usage
