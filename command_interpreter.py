@@ -28,13 +28,15 @@ class CommandInterpreter:
         if model_path is None:
             model_path = self._get_default_model()
             
-        # Initialize the LLM
-        self.llm = Llama(
-            model_path=model_path,
-            n_ctx=n_ctx,
-            n_threads=n_threads or os.cpu_count(),
-            verbose=verbose
-        )
+        # Initialize the LLM if model path is provided and exists
+        self.llm = None
+        if model_path and os.path.exists(model_path):
+            self.llm = Llama(
+                model_path=model_path,
+                n_ctx=n_ctx,
+                n_threads=n_threads or os.cpu_count(),
+                verbose=verbose
+            )
         
         # Command templates for the system prompt
         self.command_templates = {
@@ -138,7 +140,12 @@ Now interpret the following voice command:
             self.command_cache[text] = command
             return command
             
-        # Use the LLM for more complex commands
+        # Use the LLM for more complex commands if available
+        if self.llm is None:
+            if self.verbose:
+                print("LLM not initialized. Using pattern matching only.")
+            return {"error": "LLM not available. Could not interpret complex command."}
+            
         system_prompt = self._build_system_prompt()
         prompt = f"{system_prompt}\n\n{text}"
         
