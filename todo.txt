@@ -1,0 +1,33 @@
+# Voice Control System Refactoring Todo List
+
+## Large Files to Split
+- [ ] Split command_interpreter.py (304 lines) into:
+  - pattern_matcher.py: Extract pattern matching functionality
+  - Update command_interpreter.py to use PatternMatcher
+- [ ] Split command_executor.py (335 lines) into:
+  - mouse_controller.py: Extract mouse control functionality
+  - keyboard_controller.py: Extract keyboard control functionality
+  - Update command_executor.py to use both controllers
+- [ ] Extract worker functionality from optimized_voice_control.py (265 lines) into:
+  - command_worker.py: Extract worker thread functionality
+  - Update optimized_voice_control.py to use CommandWorker
+
+## Import Fixes
+- [ ] Update imports in src/core/voice_control_system.py
+- [ ] Update imports in src/core/optimized_voice_control.py
+- [ ] Update imports in src/core/transcriber.py
+- [ ] Update imports in src/core/command_interpreter.py
+- [ ] Update imports in src/core/command_executor.py
+
+## Test File Import Fixes
+- [ ] Update imports in tests/unit/test_voice_control.py
+- [ ] Update imports in tests/unit/mock_tests.py
+- [ ] Update imports in tests/e2e/headless_demo.py
+- [ ] Update imports in tests/e2e/demo_test.py
+- [ ] Update imports in tests/e2e/file_based_test.py
+
+## Additional Tasks
+- [ ] Create setup.py for proper package installation
+- [ ] Run tests to verify refactoring
+- [ ] Commit and push changes
+- [ ] Report refactoring to user
