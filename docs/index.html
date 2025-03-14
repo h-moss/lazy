@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Control System - Test Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Voice Control System Test Results</h1>
+        <p>Showcasing test inputs and outputs for the voice-controlled system</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#overview">Overview</a></li>
+            <li><a href="#mouse-commands">Mouse Commands</a></li>
+            <li><a href="#keyboard-commands">Keyboard Commands</a></li>
+            <li><a href="#architecture">System Architecture</a></li>
+        </ul>
+    </nav>
+    
+    <main>
+        <section id="overview">
+            <h2>System Overview</h2>
+            <p>This voice control system uses SpeechRecognition for microphone input, 
+            Whisper for transcription, and a local LLM to interpret commands into structured formats
+            that can be executed by the pynput library.</p>
+            
+            <div class="overview-cards">
+                <div class="card">
+                    <h3>Speech Recognition</h3>
+                    <p>Captures audio from the microphone and detects voice activity</p>
+                </div>
+                <div class="card">
+                    <h3>Whisper Transcription</h3>
+                    <p>Converts spoken commands to text with high accuracy</p>
+                </div>
+                <div class="card">
+                    <h3>LLM Interpretation</h3>
+                    <p>Processes text into structured command formats</p>
+                </div>
+                <div class="card">
+                    <h3>Command Execution</h3>
+                    <p>Executes structured commands as keyboard and mouse inputs</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="mouse-commands">
+            <h2>Mouse Commands</h2>
+            
+            <div class="test-sample">
+                <h3>Move Mouse Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/move_mouse.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"move mouse to 500, 300"</p>
+                    <h4>Transcription:</h4>
+                    <p>"move mouse to 500, 300"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "mouse",
+  "action": "move",
+  "x": 500,
+  "y": 300
+}
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="test-sample">
+                <h3>Click Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/click.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"click left mouse button"</p>
+                    <h4>Transcription:</h4>
+                    <p>"click left mouse button"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "mouse",
+  "action": "click",
+  "button": "left"
+}
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="test-sample">
+                <h3>Right Click Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/right_click.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"right click"</p>
+                    <h4>Transcription:</h4>
+                    <p>"right click"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "mouse",
+  "action": "click",
+  "button": "right"
+}
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="test-sample">
+                <h3>Double Click Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/double_click.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"double click"</p>
+                    <h4>Transcription:</h4>
+                    <p>"double click"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "mouse",
+  "action": "double_click",
+  "button": "left"
+}
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="test-sample">
+                <h3>Scroll Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/scroll_down.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"scroll down 5 lines"</p>
+                    <h4>Transcription:</h4>
+                    <p>"scroll down 5 lines"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "mouse",
+  "action": "scroll",
+  "direction": "down",
+  "amount": 5
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        
+        <section id="keyboard-commands">
+            <h2>Keyboard Commands</h2>
+            
+            <div class="test-sample">
+                <h3>Key Combination Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/press_ctrl_c.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"press control and c"</p>
+                    <h4>Transcription:</h4>
+                    <p>"press control and c"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "keyboard",
+  "action": "press",
+  "keys": ["ctrl", "c"]
+}
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="test-sample">
+                <h3>Alt+F4 Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/press_alt_f4.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"press alt f4"</p>
+                    <h4>Transcription:</h4>
+                    <p>"press alt f4"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "keyboard",
+  "action": "press",
+  "keys": ["alt", "f4"]
+}
+                    </pre>
+                </div>
+            </div>
+            
+            <div class="test-sample">
+                <h3>Type Text Command</h3>
+                <div class="audio-player">
+                    <audio controls>
+                        <source src="audio/type_hello.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                <div class="transcription-result">
+                    <h4>Voice Command:</h4>
+                    <p>"type hello world"</p>
+                    <h4>Transcription:</h4>
+                    <p>"type hello world"</p>
+                    <h4>Interpreted Command:</h4>
+                    <pre>
+{
+  "type": "keyboard",
+  "action": "type",
+  "text": "hello world"
+}
+                    </pre>
+                </div>
+            </div>
+        </section>
+        
+        <section id="architecture">
+            <h2>System Architecture</h2>
+            <div class="architecture-diagram">
+                <img src="images/architecture-diagram.svg" alt="System Architecture Diagram" class="placeholder-image">
+                <p class="image-caption">Voice Control System Architecture</p>
+            </div>
+            
+            <div class="component-description">
+                <h3>Components</h3>
+                <ul>
+                    <li><strong>SpeechRecognition</strong>: Handles microphone input and voice activity detection</li>
+                    <li><strong>Whisper</strong>: Transcribes audio to text with high accuracy</li>
+                    <li><strong>Local LLM</strong>: Interprets transcribed text into structured commands</li>
+                    <li><strong>Command Executor</strong>: Executes structured commands using pynput</li>
+                </ul>
+            </div>
+            
+            <div class="performance-metrics">
+                <h3>Performance Metrics</h3>
+                <div class="chart-container">
+                    <canvas id="accuracyChart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>Voice Control System - GitHub Pages Demo</p>
+        <p><a href="https://github.com/h-moss/lazy">View on GitHub</a></p>
+    </footer>
+    
+    <script src="scripts.js"></script>
+</body>
+</html>

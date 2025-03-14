@@ -1,0 +1,13 @@
+{
+  "file": "right_click.wav",
+  "voice_command": "right click",
+  "transcription": " Right click.",
+  "command": {
+    "error": "LLM not available. Could not interpret command."
+  },
+  "expected": {
+    "type": "mouse",
+    "action": "click",
+    "button": "right"
+  }
+}
